@@ -16,7 +16,16 @@ export default function Navbar(props) {
                      <Link className={`nav-link ${props.active==="home"?"active":""}`} aria-current="page" to="/">Home</Link>
                   </li>
                   <li className="nav-item">
-                     <Link className={`nav-link ${props.active==="about"?"active":""}`} to="/about">{props.aboutText}</Link>
+                     <Link className={`nav-link ${props.active==="about"?"active":""}`} to="/about">About Us</Link>
+                  </li>
+                  <li className="nav-item">
+                     <Link className={`nav-link ${props.active==="list"?"active":""}`} to="/list">List</Link>
+                  </li>
+                  <li className="nav-item">
+                     <Link className={`nav-link ${props.active==="form"?"active":""}`} to="/form">Form</Link>
+                  </li>
+                  <li className="nav-item">
+                     <Link className={`nav-link ${props.active==="todos"?"active":""}`} to="/todos">Todos</Link>
                   </li>
                </ul>
                <form className="d-flex">

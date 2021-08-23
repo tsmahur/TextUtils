@@ -1,4 +1,5 @@
 import React, { useState } from 'react' //imr
+// import React, { useState,useEffect } from 'react'
 // import {StyleSheet} from 'react';
 
 
@@ -47,8 +48,14 @@ export default function TextForm(props) {  //rfc
       setText(event.target.value)
    }
 
-   props.title("TextUtils - Home")
-   props.activeLink("home")
+//    // trigger on component mount
+//   useEffect(() => {
+//    props.title("TextUtils - Home");
+//    props.activeLink("home");
+//  }, []);
+
+props.activeLink("home","TextUtils - Home")
+
    return (
       <>
          <div className="container" style={{color:props.mode==='dark'?'#e0dddd':'black'}}>

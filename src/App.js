@@ -1,19 +1,22 @@
 // import logo from './logo.svg';
 import './App.css';
-import About from './components/About';
-import Navbar from './components/Navbar'
-import TextForm from './components/TextForm'
-import React, { useState } from 'react'
-import Alert from './components/Alert';
+import About from './textUtilsComponents/About';
+import Navbar from './textUtilsComponents/Navbar'
+import TextForm from './textUtilsComponents/TextForm'
+import React, { useState,useEffect } from 'react'
+import Alert from './textUtilsComponents/Alert';
+import ListTable from './formAndListComponent/ListTable';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   // Link
 } from "react-router-dom";
+import Forms from './formAndListComponent/Forms';
+import { Todos } from './toDoComponents/Todos'; //because of arrow function  we need to put in { }
+import { AddTodo } from "./toDoComponents/AddTodo";
 
 
-let about = "About Us";
 function App() {
   // const [darkMode, setDarkMode] = useState(false)
   const [mode, setMode] = useState('light')
@@ -54,31 +57,99 @@ function App() {
   // }
 
 
-  const showTitle=(title)=>{
+  // const showTitle=(title)=>{
+  //   document.title=title
+  // }
+
+  const activeLink=(activeTab,title)=>{
+    setActive(activeTab)
     document.title=title
   }
 
-  const activeLink=(input)=>{
-    setActive(input);
+
+  // ----------------ToDo starts------------------------
+  let initTodo;
+  if (localStorage.getItem("todos") === null) {
+    initTodo = [];
   }
+  else {
+    initTodo = JSON.parse(localStorage.getItem("todos"));
+  }
+
+  const onDelete = (todo) => {
+    console.log("I am ondelete of todo", todo);
+    // Deleting this way in react does not work need to add hooks and state
+    // let index = todos.indexOf(todo);
+    // todos.splice(index, 1);
+
+    setTodos(todos.filter((e) => { //hooks
+      return e !== todo;
+    }));
+    console.log("deleted", todos)
+    // localStorage.setItem("todos", JSON.stringify(todos)); no need as useEffect will work fine
+  }
+
+  const addTodo = (title, desc) => {
+    console.log("I am adding this todo", title, desc)
+    let sno;
+    if (todos.length === 0) {
+      sno = 0;
+    }
+    else {
+      sno = todos[todos.length - 1].sno + 1;
+    }
+    const myTodo = {
+      sno: sno,
+      title: title,
+      desc: desc,
+    }
+    setTodos([...todos, myTodo]);
+    console.log(myTodo);
+  }
+
+  const [todos, setTodos] = useState(initTodo);
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos])
+
+  //T--------------------------Todos End--------------------------
 
   return (
     <>
       {/* {titleBlink(4)} */}
 
       <Router>
-      <Navbar aboutText={about} mode={mode} toggleMode={toggleMode} active={active}/>
+      <Navbar  mode={mode} toggleMode={toggleMode} active={active}/>
       <Alert alert={alert} />
       <div className="container my-4">
           <Switch>
             <Route exact path="/about">
-              <About mode={mode} title={showTitle} activeLink={activeLink}/>
+              <About mode={mode} activeLink={activeLink}/>
             </Route>
             <Route exact path="/">
               {/* <Home /> */}
               <TextForm heading="Enter the text to analyze below" mode={mode} showAlert={showAlert} 
-              title={showTitle} activeLink={activeLink} />
+              activeLink={activeLink} />
             </Route>
+            <Route exact path="/list">
+              <ListTable mode={mode}  activeLink={activeLink}/>
+            </Route>
+            <Route exact path="/form">
+              <Forms mode={mode} activeLink={activeLink}/>
+            </Route>
+
+            {/* //--------------- ToDo-------------------- */}
+            <Route exact path="/todos" render={()=>{
+            return(
+            <>
+            {/* {showTitle("TextUtils - ToDos")}
+            {activeLink("todos")} */}
+            <AddTodo addTodo={addTodo} />
+            <Todos todos={todos} onDelete={onDelete} mode={mode} activeLink={activeLink}/> 
+            </>)
+          }}> 
+          </Route>
+          {/*--------------------- Todo end----------------- */}
           </Switch>
       </div>
       </Router>

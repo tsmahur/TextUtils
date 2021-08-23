@@ -26,10 +26,10 @@ export default function About(props) {
    //       setBtnText("Disable Dark Mode");
    //    }
    // }
+   
 
-
-   props.title("TextUtils - About Us")
-   props.activeLink("about")
+   props.activeLink("about","TextUtils - About Us")
+   
    return (
       <>
       {/* <div className="container" style={myStyle}> */}
