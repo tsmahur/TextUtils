@@ -10,6 +10,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
   // Link
 } from "react-router-dom";
 import Forms from './formAndListComponent/Forms';
@@ -127,6 +128,7 @@ function App() {
             <Route exact path="/about">
               <About mode={mode} activeLink={activeLink}/>
             </Route>
+            <Route path="/TextUtils" render={()=>(<Redirect to="/"/>)}/>
             <Route exact path="/">
               {/* <Home /> */}
               <TextForm heading="Enter the text to analyze below" mode={mode} showAlert={showAlert} 
