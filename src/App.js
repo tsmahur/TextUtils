@@ -15,6 +15,7 @@ import {
 import Forms from './formAndListComponent/Forms';
 import { Todos } from './toDoComponents/Todos'; //because of arrow function  we need to put in { }
 import { AddTodo } from "./toDoComponents/AddTodo";
+import PageNotFound from "./PageNotFound/PageNotFound"
 
 
 function App() {
@@ -150,6 +151,9 @@ function App() {
           }}> 
           </Route>
           {/*--------------------- Todo end----------------- */}
+          <Route >
+              <PageNotFound/>
+            </Route>
           </Switch>
       </div>
       </Router>

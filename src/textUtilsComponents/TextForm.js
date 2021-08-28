@@ -35,7 +35,8 @@ export default function TextForm(props) {  //rfc
    const copyModifiedText = () => {
       var content = document.getElementById("myBoxModified") //old
       content.select() //select at UI
-      navigator.clipboard.writeText(content.value)
+      // navigator.clipboard.writeText(content.value)
+      navigator.clipboard.writeText(modifiedText)
       props.showAlert("Modified Text is copied to Clipboard","success")
    }
 
@@ -64,19 +65,19 @@ props.activeLink("home","TextUtils - Home")
                <textarea className="form-control" id="myBox" rows="5" value={text} onChange={handleOnChange}
                style={{backgroundColor:props.mode==='dark'?'#3f4c58':'white',color:props.mode==='dark'?'#e0dddd':'black'}}></textarea>
             </div>
-            <button className="btn btn-primary mx-3" onClick={upperCaseClick}>UpperCase</button>
-            <button className="btn btn-primary mx-3" onClick={lowerCaseClick}>LowerCase</button>
-            <button className="btn btn-primary mx-3" onClick={clearText}>Clear</button>
-            <button className="btn btn-primary mx-3" onClick={copyModifiedText}>Copy Modified</button>
-            <button className="btn btn-primary mx-3" onClick={removeExtraSpace}>Remove Extra Spaces</button>
-            <button className="btn btn-primary mx-3" >Capitalize</button>
-            <button className="btn btn-primary mx-3" >Orignal</button>
-            {/* <button className="btn btn-primary mx-3" >Undo</button>
-            <button className="btn btn-primary mx-3" >Redo</button> */}
+            <button className="btn btn-primary mx-3 my-1" onClick={upperCaseClick} disabled={text.length===0}>UpperCase</button>
+            <button className="btn btn-primary mx-3 my-1" onClick={lowerCaseClick} disabled={text.length===0}>LowerCase</button>
+            <button className="btn btn-primary mx-3 my-1" onClick={clearText} disabled={text.length===0}>Clear</button>
+            <button className="btn btn-primary mx-3 my-1" onClick={copyModifiedText} disabled={text.length===0}>Copy Modified</button>
+            <button className="btn btn-primary mx-3 my-1" onClick={removeExtraSpace} disabled={text.length===0}>Remove Extra Spaces</button>
+            <button className="btn btn-primary mx-3 my-1"  disabled={text.length===0}>Capitalize</button>
+            <button className="btn btn-primary mx-3 my-1"  disabled={text.length===0}>Orignal</button>
+            {/* <button className="btn btn-primary mx-3 my-1"  disabled={text.length===0}>Undo</button>
+            <button className="btn btn-primary mx-3 my-1"  disabled={text.length===0}>Redo</button> */}
          </div>
          <div className="container my-3 " style={{color:props.mode==='dark'?'#e0dddd':'black'}}>
             <h2 className="customInlineDisplay mb-3">Modified Text</h2>
-            <div className="customInlineDisplay mx-3"> ( Summary : Total {modifiedText.length} characters &amp; {modifiedText === "" ? 0 : modifiedText.trim().split(" ").length} words )</div>
+            <div className="customInlineDisplay mx-3"> ( Summary : Total {modifiedText.length} characters &amp; {modifiedText === "" ? 0 : modifiedText.split(/\s/).filter((txt)=>{return txt.length!==0}).length} words )</div>
                <textarea className="form-control" id="myBoxModified" rows="5" value={modifiedText === "" ? "Enter something to Preview" : modifiedText} 
                 style={{backgroundColor:props.mode==='dark'?'#3f4c58':'white',color:props.mode==='dark'?'#e0dddd':'black'}} readOnly></textarea>
          </div>
